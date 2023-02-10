@@ -9,11 +9,10 @@ contract StoragePart1 {
 
     function readBySlot(uint256 slot) public view returns (bytes32 value) {
         assembly {
+            //0x 0007 0006 000000000000000000000005 00000000000000000000000000000004
             value := sload(slot)
         }
     }
-
-    //0x 0007 0006 000000000000000000000005 00000000000000000000000000000004
 
     function readE() external view returns (uint16 e) {
         assembly {
@@ -37,17 +36,16 @@ contract StoragePart1 {
         assembly {
             //0x 0007 0006 000000000000000000000005 00000000000000000000000000000004
             f := sload(F.slot)
-            //0x 0000 000000000000000000000000 00000000000000000000000000000000 0007 
+            //0x 0000 000000000000000000000000 00000000000000000000000000000000 0007
             f := shr(mul(F.offset, 8), f)
         }
     }
 
     function readD() external view returns (uint96 d) {
         assembly {
-
             //0x 0007 0006 000000000000000000000005 00000000000000000000000000000004
             d := sload(D.slot)
-            //0x 00000000000000000000000000000000 0007 0006 000000000000000000000005 
+            //0x 00000000000000000000000000000000 0007 0006 000000000000000000000005
             d := shr(mul(D.offset, 8), d)
             //0x 00000000000000000000000000000000 0000 0000 000000000000000000000005
             d := and(d, 0xffffffffffffffffffffffff)
@@ -62,7 +60,6 @@ contract StoragePart1 {
             c := and(c, 0xffffffffffffffffffffffffffffffff)
         }
     }
-
 
     function setC(uint128 _c) public {
         C = _c;
